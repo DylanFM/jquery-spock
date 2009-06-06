@@ -6,15 +6,16 @@
     spock: function(options) {
       opts = $.extend({}, $.fn.spock.defaults, options);
       // This will be called on an element or collection of elements
-      this.each(processElements);
+      return this.each(processElements);
     }
   });
 
   $.fn.spock.defaults = {
     identifierRegexp: /((?:[A-Z]\w+\s?)+)/g,
-    processKeyword: processKeyword,
     ignore: ['the'],
-    keywordClass: 'keyword'
+    keywordClass: 'keyword',
+    processKeyword: processKeyword,
+    afterFilter: null
   };
   
   // Private functions
@@ -23,7 +24,7 @@
     // Replace any matched items with the results of the function
     var processed = $(this).text().replace(opts.identifierRegexp, function(match) {
       // Check if the match is to be ignored
-      if (jQuery.inArray(jQuery.trim(match).toLowerCase(),opts.ignore) < 0) {
+      if ($.inArray($.trim(match).toLowerCase(),opts.ignore) < 0) {
         return opts.processKeyword(match);
       } else {
         return match;
@@ -31,6 +32,11 @@
     });
     // Set the content as the processed content
     $(this).html(processed);
+    // Run the afterFilter if it exists
+    if (typeof opts.afterFilter == 'function') {
+      return opts.afterFilter.apply(this);
+    }
+    return true;
   }
   
   // Private, but can be overridden through options
@@ -40,7 +46,7 @@
     // We don't want to enclose a trailing space
     if (/\w+\s/.test(match)) {
       following_space = true;
-      match = jQuery.trim(match);
+      match = $.trim(match);
     }
     // Enclose the keyword
     kw = '<span class="'+opts.keywordClass+'">'+match+'</span>';
