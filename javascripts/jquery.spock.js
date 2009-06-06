@@ -17,6 +17,8 @@
     keywordClass: 'keyword'
   };
   
+  // Private functions
+  
   function processElements () {
     // Replace any matched items with the results of the function
     var processed = $(this).text().replace(opts.identifierRegexp, function(match) {
@@ -31,6 +33,7 @@
     $(this).html(processed);
   }
   
+  // Private, but can be overridden through options
   function processKeyword (match) {
     var following_space = false,
         kw;
