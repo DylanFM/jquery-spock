@@ -12,12 +12,22 @@
 
   $.fn.spock.defaults = {
     identifierRegexp: /((?:[A-Z]\w+\s?)+)/g,
-    processKeyword: processKeyword
+    processKeyword: processKeyword,
+    ignore: ['the']
   };
   
   function processElements () {
     // Replace any matched items with the results of the function
-    $(this).html($(this).text().replace(opts.identifierRegexp, opts.processKeyword));
+    var processed = $(this).text().replace(opts.identifierRegexp, function(match) {
+      // Check if the match is to be ignored
+      if (jQuery.inArray(jQuery.trim(match).toLowerCase(),opts.ignore) < 0) {
+        return opts.processKeyword(match);
+      } else {
+        return match;
+      }
+    });
+    // Set the content as the processed content
+    $(this).html(processed);
   }
   
   function processKeyword (match) {
@@ -28,6 +38,7 @@
       following_space = true;
       match = jQuery.trim(match);
     }
+    // Enclose the keyword
     kw = '<span class="keyword">'+match+'</span>';
     if (following_space) kw += ' ';
     return kw;
