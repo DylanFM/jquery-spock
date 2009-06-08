@@ -5,10 +5,9 @@ $(function() {
 function addWikipediaLinks () {
   $(this).find("span.keyword").each(function() {
     var term = $(this).text(),
-        wp_url = "http://en.wikipedia.org/w/api.php?action=opensearch&format=json&callback=?",
         that = this;
     // Use the Wikipedia API to see if pages exist for this term
-    $.getJSON(wp_url+"&search="+term, function(data) {
+    $.getJSON("http://en.wikipedia.org/w/api.php?action=opensearch&search="+term+"&format=json&callback=?", function(data) {
       var replacement = term;
       // If pages exist, then replace the item with a link to its Wikipedia page
       if (data[1].length > 0) {
