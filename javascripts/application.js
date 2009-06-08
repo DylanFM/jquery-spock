@@ -1,5 +1,5 @@
 $(function() {
-  $("p").spock({ afterFilter: addWikipediaLinks });
+  $("div.example p").spock({ afterFilter: addWikipediaLinks });
 });
 
 function addWikipediaLinks () {
