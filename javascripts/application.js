@@ -1,5 +1,5 @@
-$(function() {
-  $("p").spock({ afterFilter: addWikipediaLinks });
+jQuery(function($) {
+  $("p").spock({ afterFilter: addWikipediaLinks }).css("color", "#333");
 });
 
 function addWikipediaLinks () {
