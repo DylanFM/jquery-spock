@@ -13,7 +13,7 @@
   $.fn.spock.defaults = {
     identifierRegexp: /((?:[A-Z]\w+\s?)+)/g,
     ignore: ['the'],
-    keywordClass: 'keyword',
+    spanClass: 'keyword',
     processKeyword: processKeyword,
     afterFilter: null
   };
@@ -49,7 +49,7 @@
       match = $.trim(match);
     }
     // Enclose the keyword
-    kw = '<span class="'+opts.keywordClass+'">'+match+'</span>';
+    kw = '<span class="'+opts.spanClass+'">'+match+'</span>';
     if (following_space) kw += ' ';
     return kw;
   }
